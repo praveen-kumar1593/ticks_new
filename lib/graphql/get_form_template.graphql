@@ -1,0 +1,3 @@
+query getFormTemplate($domain: String!, $name: String!) {
+  getFormTemplate(domain: $domain, name: $name)
+} 

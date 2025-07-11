@@ -1,0 +1,199 @@
+scalar Datetime
+scalar JSON
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  fetchUserAttendanceStatus: FetchUserAttendanceStatusResponse
+  getAttendanceLog(data: AttendanceLogInput): AttendanceLogResponse
+  getAssigneeWorkTimeDetails: AssigneeWorkTimeDetails
+  login(credentials: JSON, isDevMode: Boolean, origin: String): JSON
+
+  refresh(refreshToken: String!): JSON
+  findAssignee(id: String!): JSON
+  getFormTemplate(domain: String!, name: String!): JSON
+  listAllGeoFences(data: geofenceList): ListAllGeoFencesResponse
+
+  findLoggedInUser: JSON
+}
+
+type Mutation {
+  markUserAttendance(data: UserAttendanceInput!): MarkUserAttendanceResponse
+  markAttendanceSync(data: [UserAttendanceBulkInput!]): SyncResponse
+  login(credentials: JSON, isDevMode: Boolean, origin: String): LoginResponse
+  updateProfile(user: JSON): JSON
+  changePassword(password: String!, newPassword: String!, origin: String): JSON
+}
+
+type LoginResponse {
+  accessToken: String
+  refreshToken: String
+  user: User
+}
+
+# Corresponds to fetchUserAttendanceStatus.graphql
+type FetchUserAttendanceStatusResponse {
+  attendanceId: String
+  user: User
+  date: Datetime
+  checkInTime: Datetime
+  checkOutTime: Datetime
+  expectedCheckInTime: Datetime
+  expectedCheckOutTime: Datetime
+  currentStatus: String
+  allowedBreak: Int
+  bufferTime: Int
+  attendanceStatusesObj: JSON
+  attendanceBreak: [AttendanceBreak]
+  createdOn: Datetime
+  updatedOn: Datetime
+}
+
+type User {
+  id: ID!
+  name: String
+  type: UserType
+  referenceId: String
+  contactNumber: String
+  emailId: String
+  status: String
+  employeeId: String
+  userName: String
+  displayName: String
+  domain: String
+}
+
+type UserType {
+  name: String
+  status: String
+}
+
+type AttendanceBreak {
+  breakId: String
+  startTime: Datetime
+  endTime: Datetime
+  duration: Int
+}
+
+# Corresponds to getAttendanceLog.graphql
+type AttendanceLogResponse {
+  items: [LogItem]
+}
+
+type LogItem {
+  id: ID
+  date: Datetime
+  checkInTime: Datetime
+  checkOutTime: Datetime
+  duration: Int
+  attendance_status: String
+  breaks: [AttendanceBreak]
+}
+
+# Corresponds to getAssigneeWorkTimeDetails.graphql
+type AssigneeWorkTimeDetails {
+  shift: Shift
+  clientWorkingHour: ClientWorkingHour
+}
+
+type Shift {
+  identifier: ID
+  startTime: String
+  endTime: String
+  duration: Int
+  domain: String
+  name: String
+  description: String
+  status: String
+  allowedBreak: Int
+  bufferTime: Int
+}
+
+type ClientWorkingHour {
+  id: ID
+  name: String
+  sundayStartTime: String
+  sundayEndTime: String
+  mondayStartTime: String
+  mondayEndTime: String
+  tuesdayStartTime: String
+  tuesdayEndTime: String
+  wednesdayStartTime: String
+  wednesdayEndTime: String
+  thursdayStartTime: String
+  thursdayEndTime: String
+  fridayStartTime: String
+  fridayEndTime: String
+  saturdayStartTime: String
+  saturdayEndTime: String
+  allowedBreak: Int
+  bufferTime: Int
+  client: String
+}
+
+# For MarkUserAttendance mutation
+type MarkUserAttendanceResponse {
+  newStatus: String
+  attendanceId: String
+}
+
+type SyncResponse {
+  status: String
+}
+
+# Inputs
+input UserAttendanceInput {
+  userId: String
+  newStatus: String
+  date: Datetime
+  location: String
+  locationName: String
+  geofence: String
+  attendanceId: Int
+  breakId: Int
+  statusSince: Float
+  batteryLevel: Int
+  deviceId: String
+}
+
+input UserAttendanceBulkInput {
+  userId: Float!
+  newStatus: String
+  date: Datetime
+  location: String
+  locationName: String
+  geofence: String
+  attendanceId: Int
+  breakId: Int
+  statusSince: Float
+  batteryLevel: Int
+  deviceId: String
+}
+
+input AttendanceLogInput {
+  userId: String
+  fromDate: String
+  toDate: String
+  attendanceStatus: String
+}
+input geofenceList {
+  domain: String
+  searchFields: JSON
+  page: Int
+  limit: Int
+  order: String
+  sortField: String
+}
+
+type GeofenceData {
+  type: String
+  data: JSON
+}
+
+type ListAllGeoFencesResponse {
+  data: [GeofenceData]
+  totalCount: Int
+}

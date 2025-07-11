@@ -1,0 +1,18 @@
+query getAttendanceLog($data: AttendanceLogInput) {
+  getAttendanceLog(data: $data) {
+    items {
+      id
+      date
+      checkInTime
+      checkOutTime
+      duration
+      attendance_status
+      breaks {
+        breakId
+        startTime
+        endTime
+        duration
+      }
+    }
+  }
+} 
