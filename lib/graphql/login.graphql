@@ -1,0 +1,3 @@
+query login($credentials: JSON, $isDevMode: Boolean, $origin: String) {
+  login(credentials: $credentials, isDevMode: $isDevMode, origin: $origin)
+}

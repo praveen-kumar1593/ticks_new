@@ -1,0 +1,35 @@
+query fetchUserAttendanceStatus {
+  fetchUserAttendanceStatus {
+    attendanceId
+    user {
+      id
+      name
+      type {
+        name
+        status
+      }
+      referenceId
+      contactNumber
+      emailId
+      status
+      employeeId
+    }
+    date
+    checkInTime
+    checkOutTime
+    expectedCheckInTime
+    expectedCheckOutTime
+    currentStatus
+    allowedBreak
+    bufferTime
+    attendanceStatusesObj
+    attendanceBreak {
+      breakId
+      startTime
+      endTime
+      duration
+    }
+    createdOn
+    updatedOn
+  }
+} 

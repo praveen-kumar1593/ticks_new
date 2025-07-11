@@ -1,0 +1,6 @@
+mutation MarkUserAttendance($data: UserAttendanceInput!) {
+  markUserAttendance(data: $data) {
+    newStatus
+    attendanceId
+  }
+} 

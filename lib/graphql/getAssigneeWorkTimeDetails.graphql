@@ -1,0 +1,37 @@
+query GetAssigneeWorkTimeDetails {
+  getAssigneeWorkTimeDetails {
+    shift {
+      identifier
+      startTime
+      endTime
+      duration
+      domain
+      name
+      description
+      status
+      allowedBreak
+      bufferTime
+    }
+    clientWorkingHour {
+      id
+      name
+      sundayStartTime
+      sundayEndTime
+      mondayStartTime
+      mondayEndTime
+      tuesdayStartTime
+      tuesdayEndTime
+      wednesdayStartTime
+      wednesdayEndTime
+      thursdayStartTime
+      thursdayEndTime
+      fridayStartTime
+      fridayEndTime
+      saturdayStartTime
+      saturdayEndTime
+      allowedBreak
+      bufferTime
+      client
+    }
+  }
+} 

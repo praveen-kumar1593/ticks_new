@@ -1,0 +1,9 @@
+query listAllGeoFences($data: geofenceList) {
+    listAllGeoFences(data: $data) {
+        data {
+            type
+            data
+        }
+        totalCount
+    }
+}
